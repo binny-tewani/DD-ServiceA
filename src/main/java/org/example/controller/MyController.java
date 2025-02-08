@@ -5,14 +5,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Random;
+
 @RestController
 public class MyController {
     @Autowired
     private RestTemplate restTemplate;
-
+    private final Random random = new Random();
 
     @GetMapping("/serviceA/api/s1")
     public String service1() {
+        if (random.nextInt(4) == 0) {
+            throw new NullPointerException("Simulated NullPointerException for testing");
+        }
         String s2Response = restTemplate.getForObject("http://localhost:8081/serviceB/api/s1", String.class);
         return "Response from ServiceA - api1 and " + s2Response;
     }
