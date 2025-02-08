@@ -70,6 +70,7 @@ public class MyController {
             log.info("Response code is " + resCode);
            return res;
         }catch (Exception e){
+            log.error(e.getMessage());
             throw new RuntimeException("Dont worry");
         }
     }
