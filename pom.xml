@@ -51,6 +51,31 @@
                     <target>11</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>io.sentry</groupId>
+                <artifactId>sentry-maven-plugin</artifactId>
+                <version>0.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- for showing output of sentry-cli -->
+                    <debugSentryCli>true</debugSentryCli>
+
+                    <org>briti</org>
+
+                    <project>servicea</project>
+                    <authToken>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</authToken>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>uploadSourceBundle</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
 <!--            &lt;!&ndash; Unzip New Relic Java agent into target/ &ndash;&gt;-->
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
