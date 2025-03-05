@@ -38,11 +38,43 @@ public class MyController {
         return "Response from ServiceA - api2 and " + s2Response;
     }
 
+
+
+
+
+
     @GetMapping("/serviceA/api/s3")
     public String service3() {
         String s2Response = restTemplate.getForObject("http://localhost:8081/serviceB/api/s3", String.class);
         return "Response from ServiceA - api3 and " + s2Response;
     }
+
+    @GetMapping("/serviceA/api/s7")
+    public String service7() {
+        return "Success - /serviceA/api/s7";
+    }
+
+
+    @PostMapping("/upload")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("No file selected for uploading");
+        }
+
+        try {
+            Path tempFile = Files.createTempFile("upload_", "_" + file.getOriginalFilename());
+            file.transferTo(tempFile.toFile());
+            return ResponseEntity.ok("File successfully uploaded: " + tempFile.toString());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the file");
+        }
+    }
+
+
+
+
+
 
     @GetMapping("/serviceA222/api/s4")
     public String service4() {
@@ -82,29 +114,29 @@ public class MyController {
         }
     }
 
-    @GetMapping("/serviceA/api/s7")
-    public String service7() {
-        String s2Response = restTemplate.getForObject("https://binny3.free.beeceptor.com/", String.class);
-        return "Response from ServiceA - api2 and " + s2Response;
-    }
+//    @GetMapping("/serviceA/api/s7")
+//    public String service7() {
+//        String s2Response = restTemplate.getForObject("https://binny3.free.beeceptor.com/", String.class);
+//        return "Response from ServiceA - api2 and " + s2Response;
+//    }
 
-    @PostMapping("/upload")
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("No file selected for uploading");
-        }
-        String tempDir = System.getProperty("java.io.tmpdir");
-        String tempFilePath = tempDir + File.separator + file.getOriginalFilename();
-
-        try {
-            Path tempFile = Files.createTempFile("upload_", "_" + file.getOriginalFilename());
-            file.transferTo(tempFile.toFile());
-            return ResponseEntity.ok("File successfully uploaded: " + tempFile.toString());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the file");
-        }
-    }
+//    @PostMapping("/upload")
+//    @CrossOrigin(origins = "*")
+//    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+//        if (file.isEmpty()) {
+//            return ResponseEntity.badRequest().body("No file selected for uploading");
+//        }
+//        String tempDir = System.getProperty("java.io.tmpdir");
+//        String tempFilePath = tempDir + File.separator + file.getOriginalFilename();
+//
+//        try {
+//            Path tempFile = Files.createTempFile("upload_", "_" + file.getOriginalFilename());
+//            file.transferTo(tempFile.toFile());
+//            return ResponseEntity.ok("File successfully uploaded: " + tempFile.toString());
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the file");
+//        }
+//    }
 
 
 }
